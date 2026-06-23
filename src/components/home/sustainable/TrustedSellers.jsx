@@ -8,7 +8,7 @@ const sellers = [
 export default function TrustedSellers() {
   return (
     <section className="py-16 bg-white">
-      <div className="container mx-auto px-4">
+      <div className="container max-w-7xl sm:px-6 mx-auto px-4">
 
         <h2 className="text-3xl font-bold text-gray-900 text-center">
           Trusted Sellers

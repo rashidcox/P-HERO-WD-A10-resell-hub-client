@@ -42,7 +42,7 @@ const categories = [
 export default function PopularCategories() {
   return (
     <section className="py-16 bg-white">
-      <div className="container mx-auto px-4">
+      <div className="container max-w-7xl sm:px-6 mx-auto px-4">
         
         {/* Section Header */}
         {/* Header */}

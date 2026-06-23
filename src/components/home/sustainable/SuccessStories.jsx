@@ -16,7 +16,7 @@ const stories = [
 export default function SuccessStories() {
   return (
     <section className="py-16 bg-slate-50">
-      <div className="container mx-auto px-4">
+      <div className="container max-w-7xl sm:px-6 mx-auto px-4">
 
         <h2 className="text-3xl font-bold text-center text-gray-900">
           Success Stories

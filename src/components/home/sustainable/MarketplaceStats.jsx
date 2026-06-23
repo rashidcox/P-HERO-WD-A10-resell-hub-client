@@ -1,7 +1,7 @@
 export default function MarketplaceStats() {
   return (
     <section className="py-16 bg-blue-600 text-white">
-      <div className="container mx-auto px-4 text-center">
+      <div className="container max-w-7xl sm:px-6 mx-auto px-4 text-center">
 
         <h2 className="text-3xl md:text-4xl font-bold">
           Marketplace Statistics

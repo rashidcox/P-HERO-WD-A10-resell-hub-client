@@ -25,18 +25,12 @@ export default function Home() {
       </div>
 
       <div>
-        {/* new products */}
-        {/* popular sellers */}
-        {/* trusted sellers */}
-        {/* success stories */}
-        {/* sustainability impact */}
-        {/* marketplace stats */}
-        <div className="grid grid-cols-6 md:grid-cols-1 gap-4">
-          <div className=""><SustainabilityImpact /></div>
+        
+          <div><SustainabilityImpact /></div>
           <div><TrustedSellers /></div>
           <div><SuccessStories /></div>
           <div><MarketplaceStats /></div>
-        </div>
+      
       </div>
     </div>
 
