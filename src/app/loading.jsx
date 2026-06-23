@@ -1,13 +1,18 @@
+import { LuShoppingBag } from "react-icons/lu";
+
 export default function Loading() {
   return (
     <div className="min-h-screen bg-slate-50 flex items-center justify-center px-4">
       <div className="text-center">
-        
+
         {/* Logo */}
         <div className="flex justify-center mb-6">
-          <div className="w-16 h-16 rounded-2xl bg-blue-600 flex items-center justify-center text-white text-2xl font-bold">
-            R
+          <div className="w-8 h-8 rounded-lg bg-teal-500 flex items-center justify-center">
+            <LuShoppingBag size={17} className="text-white" />
           </div>
+          <span className="text-xl font-bold text-red-600">
+            ReSell<span className="text-teal-400">Hub</span>
+          </span>
         </div>
 
         {/* Loading Animation */}
@@ -22,11 +27,6 @@ export default function Loading() {
             style={{ animationDelay: "0.2s" }}
           ></div>
         </div>
-
-        <h2 className="text-2xl font-bold text-gray-900">
-          ReSell Hub
-        </h2>
-
         <p className="text-gray-500 mt-2">
           Finding the best products for you...
         </p>
