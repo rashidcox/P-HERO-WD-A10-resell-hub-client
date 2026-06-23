@@ -101,10 +101,6 @@ export default function FeaturedProducts() {
                     📍 {product.location}
                   </span>
                 </div>
-
-                <button className="w-full mt-5 bg-blue-600 hover:bg-blue-700 text-white py-3 rounded-xl font-medium transition">
-                  View Details
-                </button>
               </div>
             </div>
           ))}

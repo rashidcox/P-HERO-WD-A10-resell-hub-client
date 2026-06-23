@@ -37,43 +37,32 @@ const categories = [
     icon: "📚",
     count: "410 Items",
   },
-  {
-    id: 7,
-    name: "Sports",
-    icon: "⚽",
-    count: "290 Items",
-  },
-  {
-    id: 8,
-    name: "Home Appliances",
-    icon: "🏠",
-    count: "670 Items",
-  },
 ];
 
-export default function Categories() {
+export default function PopularCategories() {
   return (
     <section className="py-16 bg-white">
       <div className="container mx-auto px-4">
         
         {/* Section Header */}
-        <div className="text-center mb-12">
-          <span className="text-blue-600 font-semibold">
-            Browse Categories
-          </span>
+        {/* Header */}
+        <div className="flex items-center justify-between mb-8">
+          <div>
+            <h2 className="text-3xl font-bold text-gray-900">
+              Popular Categories
+            </h2>
+          </div>
 
-          <h2 className="mt-2 text-3xl md:text-4xl font-bold text-gray-900">
-            Popular Categories
-          </h2>
-
-          <p className="mt-3 text-gray-500 max-w-2xl mx-auto">
-            Discover thousands of quality second-hand products
-            across multiple categories.
-          </p>
+          <Link
+            href="/categories"
+            className="text-blue-600 font-medium hover:text-blue-700"
+          >
+            View All →
+          </Link>
         </div>
 
         {/* Categories Grid */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+        <div className="grid grid-cols-3 md:grid-cols-6 gap-6">
           {categories.map((category) => (
             <Link
               key={category.id}
@@ -89,23 +78,8 @@ export default function Categories() {
               <h3 className="mt-4 text-lg font-semibold text-gray-900">
                 {category.name}
               </h3>
-
-              {/* Count */}
-              <p className="mt-1 text-sm text-gray-500">
-                {category.count}
-              </p>
             </Link>
           ))}
-        </div>
-
-        {/* Button */}
-        <div className="text-center mt-10">
-          <Link
-            href="/categories"
-            className="inline-flex items-center gap-2 px-6 py-3 bg-blue-600 text-white rounded-xl font-medium hover:bg-blue-700 transition"
-          >
-            View All Categories →
-          </Link>
         </div>
       </div>
     </section>
