@@ -10,11 +10,75 @@ import {
     FaEyeSlash,
 } from "react-icons/fa";
 import { FcGoogle } from "react-icons/fc";
+import { authClient } from "@/lib/auth-client";
+import { createAuthClient } from "better-auth/react";
+import { role } from "better-auth/client";
+import { redirect } from "next/navigation";
 
 export default function RegisterPage() {
     const [showPassword, setShowPassword] = useState(false);
-    const [showConfirmPassword, setShowConfirmPassword] =
-        useState(false);
+    const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+    
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        const formData = new FormData(e.currentTarget);
+        const imageFile = formData.get("image");
+
+        // Upload image to imgBB
+        const imageData = new FormData();
+        imageData.append("image", imageFile);
+
+        const uploadRes = await fetch(
+            `https://api.imgbb.com/1/upload?key=${process.env.NEXT_PUBLIC_IMGBB_API_KEY}`,
+            {
+                method: "POST",
+                body: imageData,
+            }
+        );
+
+        const uploadResult = await uploadRes.json();
+
+        if (!uploadResult.success) {
+            alert("Image upload failed");
+            return;
+        }
+
+        const imageUrl = uploadResult.data.url;
+
+        const user = Object.fromEntries(formData.entries());
+
+        if (user.password !== user.confirmPassword) {
+            alert("Passwords do not match");
+            return;
+        }
+
+        const { data, error } = await authClient.signUp.email({
+            name: user.name,
+            email: user.email,
+            password: user.password,
+            role: user.role,
+            image: imageUrl, // imgBB URL
+        });
+
+        if (error) {
+            alert("error in here");
+            return;
+        }
+        if(data){
+            alert("Registration successful");
+            redirect("/login");
+        }
+    };
+
+    const authClient = createAuthClient();
+    const handleGoogleRegister = async () => {
+        const data = await authClient.signUp.social({
+            provider: "google",
+        })
+    }
+
+
 
     return (
         <div className="min-h-screen bg-gray-400 flex items-center justify-center px-4 py-10">
@@ -32,7 +96,7 @@ export default function RegisterPage() {
                 </div>
 
                 {/* Form */}
-                <form className="mt-8 space-y-5">
+                <form className="mt-8 space-y-5" onSubmit={handleSubmit} method="POST">
 
                     {/* Name */}
                     <div>
@@ -44,12 +108,15 @@ export default function RegisterPage() {
                             <FaUser className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400" />
 
                             <input
+                                name="name"
                                 type="text"
+                                required
                                 placeholder="Enter your full name"
                                 className="w-full pl-12 pr-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:outline-none"
                             />
                         </div>
                     </div>
+
 
                     {/* Email */}
                     <div>
@@ -61,12 +128,31 @@ export default function RegisterPage() {
                             <FaEnvelope className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400" />
 
                             <input
+                                name="email"
                                 type="email"
+                                required
                                 placeholder="Enter your email"
                                 className="w-full pl-12 pr-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:outline-none"
                             />
                         </div>
                     </div>
+
+                    {/* Image */}
+                    <div>
+
+                        <label className="block text-sm font-medium text-gray-700 mb-2">
+                            Profile Image
+                        </label>
+
+                        <input
+                            type="file"
+                            required
+                            name="image"
+                            accept="image/*"
+                            className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:outline-none"
+                        />
+                    </div>
+
                     {/* Role Selection */}
                     <div>
                         <label className="block text-sm font-medium text-gray-700 mb-3">
@@ -125,7 +211,9 @@ export default function RegisterPage() {
                             <FaLock className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400" />
 
                             <input
+                                name="password"
                                 type={showPassword ? "text" : "password"}
+                                required
                                 placeholder="Create password"
                                 className="w-full pl-12 pr-12 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:outline-none"
                             />
@@ -156,16 +244,19 @@ export default function RegisterPage() {
                             <FaLock className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400" />
 
                             <input
+                                name="confirmPassword"
                                 type={
                                     showConfirmPassword
                                         ? "text"
                                         : "password"
                                 }
+                                required
                                 placeholder="Confirm password"
                                 className="w-full pl-12 pr-12 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:outline-none"
                             />
 
                             <button
+
                                 type="button"
                                 onClick={() =>
                                     setShowConfirmPassword(
@@ -185,7 +276,7 @@ export default function RegisterPage() {
 
                     {/* Terms */}
                     <label className="flex items-start gap-2 text-sm text-gray-600">
-                        <input type="checkbox" className="mt-1" />
+                        <input type="checkbox" required className="mt-1" />
 
                         <span>
                             I agree to the{" "}
@@ -218,7 +309,8 @@ export default function RegisterPage() {
                     {/* Google Register */}
                     <button
                         type="button"
-                        className="w-full py-3 border border-gray-300 rounded-xl flex items-center justify-center gap-3 hover:bg-gray-50 transition"
+                        onClick={() => handleGoogleRegister()}
+                        className="cursor-pointer w-full py-3 border border-gray-300 rounded-xl flex items-center justify-center gap-3 hover:bg-gray-50 transition"
                     >
                         <FcGoogle size={24} />
                         Continue with Google

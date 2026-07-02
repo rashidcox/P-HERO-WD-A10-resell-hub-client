@@ -1,3 +1,4 @@
+
 "use client";
 
 import React, { useState, useMemo } from 'react';
@@ -53,7 +54,7 @@ export default function ProductDetailsPage() {
   const params = useParams();
   const router = useRouter();
   
-  // Find product from dataset matching dynamic ID path
+  // Find product from dataset matching dynamic ID path and dinamic here today life simple of here.
   const product = useMemo(() => {
     return DEMO_PRODUCTS.find(p => p.id === parseInt(params.id)) || DEMO_PRODUCTS[0];
   }, [params.id]);

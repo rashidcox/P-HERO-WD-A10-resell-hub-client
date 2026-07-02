@@ -9,9 +9,35 @@ import {
   FaEyeSlash,
 } from "react-icons/fa";
 import { FcGoogle } from "react-icons/fc";
+import { authClient } from "@/lib/auth-client";
+import { redirect } from "next/navigation";
 
 export default function LoginPage() {
   const [showPassword, setShowPassword] = useState(false);
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const formData = new FormData(e.currentTarget);
+    const loger = Object.fromEntries(formData.entries());
+
+    const { data, error } = await authClient.signIn.email({
+      email: loger.email,
+      password: loger.password,
+    });
+
+    if (error) {
+      alert("error");
+      return;
+    }
+    if(!error){
+      alert("Login successful");
+      redirect("/");
+    }
+
+
+  }
+
+
 
   return (
     <div className="min-h-screen bg-gray-400 flex items-center justify-center px-4 py-10">
@@ -29,7 +55,7 @@ export default function LoginPage() {
         </div>
 
         {/* Form */}
-        <form className="mt-8 space-y-5">
+        <form className="mt-8 space-y-5" onSubmit={handleSubmit} method="POST">
 
           {/* Email */}
           <div>
@@ -41,6 +67,8 @@ export default function LoginPage() {
               <FaEnvelope className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400" />
 
               <input
+                name="email"
+                required
                 type="email"
                 placeholder="Enter your email"
                 className="w-full pl-12 pr-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:outline-none"
@@ -58,6 +86,8 @@ export default function LoginPage() {
               <FaLock className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400" />
 
               <input
+                name="password"
+                required
                 type={showPassword ? "text" : "password"}
                 placeholder="Enter your password"
                 className="w-full pl-12 pr-12 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:outline-none"

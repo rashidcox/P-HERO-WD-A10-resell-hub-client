@@ -17,6 +17,18 @@ const DEMO_PRODUCTS = [
   { id: 8, name: "iPhone 11 64GB", price: 28000, category: "Mobiles", condition: "Excellent", rating: 4.7, image: "📱" },
   { id: 9, name: "Canon EOS 700D", price: 18500, category: "Electronics", condition: "Good", rating: 4.6, image: "📷" },
   { id: 10, name: "Wooden Study Table", price: 6500, category: "Furniture", condition: "Fair", rating: 4.5, image: "🪑" },
+  { id: 11, name: "Beats Studio3 Wireless", price: 12000, category: "Electronics", condition: "Good", rating: 4.6, image: "🎧" },
+  { id: 12, name: "Honda CB Shine 2019", price: 95000, category: "Vehicles", condition: "Good", rating: 4.7, image: "🏍️" },
+  { id: 13, name: "Women's Leather Boots", price: 2500, category: "Fashion", condition: "Good", rating: 4.4, image: "👠" },
+  { id: 14, name: "Dell Inspiron 15 Laptop", price: 35000, category: "Electronics", condition: "Good", rating: 4.6, image: "💻" },
+  { id: 15, name: "iPhone 12 128GB", price: 45000, category: "Mobiles", condition: "Excellent", rating: 4.7, image: "📱" },
+  { id: 16, name: "Wooden Dining Table", price: 12000, category: "Furniture", condition: "Good", rating: 4.5, image: "🪑" },
+  { id: 17, name: "Sony WH-1000XM4", price: 15500, category: "Electronics", condition: "Good", rating: 4.6, image: "🎧" },
+  { id: 18, name: "Honda CB Shine 2018", price: 85000, category: "Vehicles", condition: "Good", rating: 4.7, image: "🏍️" },
+  { id: 19, name: "Men's Denim Jacket", price: 1200, category: "Fashion", condition: "Good", rating: 4.4, image: "🧥" },
+  { id: 20, name: "MacBook Pro 2019", price: 65000, category: "Electronics", condition: "Excellent", rating: 4.8, image: "💻" },
+  { id: 21, name: "iPhone 11 64GB", price: 28000, category: "Mobiles", condition: "Excellent", rating: 4.7, image: "📱" },
+  { id: 22, name: "Canon EOS 700D", price: 18500, category: "Electronics", condition: "Good", rating: 4.6, image: "📷" },
 ];
 
 const ITEMS_PER_PAGE = 6;
@@ -84,6 +96,8 @@ export default function ProductsPage() {
   return (
     <div className="min-h-screen bg-gray-50 text-gray-800 p-4 md:p-8">
       <div className="max-w-7xl mx-auto">
+
+
 
         {/* Breadcrumb / Header */}
         <div className="mb-6">
