@@ -2,9 +2,15 @@
 import { useState } from "react";
 import Link from "next/link";
 import { LuShoppingBag } from "react-icons/lu";
+import { authClient } from "@/lib/auth-client";
+import Image from "next/image";
+
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
+  
+  const { data: session } = authClient.useSession();
+  const user = session?.user;
 
   const navLinks = [
     { name: "Home", href: "/" },
@@ -32,7 +38,7 @@ const Navbar = () => {
             {navLinks.map((link) => (
               <Link
                 key={link.name}
-                href={link.href} 
+                href={link.href}
                 className="text-gray-200 hover:text-blue-600 transition-colors duration-200 text-sm font-medium"
               >
                 {link.name}
@@ -41,19 +47,22 @@ const Navbar = () => {
           </div>
 
           {/* Desktop Auth Buttons */}
+
           <div className="hidden md:flex items-center space-x-4">
-            <Link
-              href="/login"
-              className="text-gray-200 hover:text-blue-600 font-medium text-sm"
-            >
-              Login
-            </Link>
-            <Link
-              href="/register"
-              className="bg-blue-600 text-white px-4 py-2 rounded-md text-sm font-medium hover:bg-blue-700 transition-colors"
-            >
-              Register
-            </Link>
+          {/* Auth Buttons */}
+            {
+              user ? <>
+                <Link href={'/profile'}>
+                  <div className="w-10 h-10 rounded-full border-2 border-teal-400 overflow-hidden">
+                    <Image className="w-full h-full object-cover" src={user?.image} alt="John Doe" width={40} height={40} />
+                  </div>
+                </Link>
+                <button className='bg-red-500 text-white px-4 py-2 cursor-pointer rounded-2xl' onClick={() => authClient.signOut()}>Logout</button>
+              </> : <>
+                <Link href={'/login'}>Login</Link>
+              </>
+            }
+            
           </div>
 
           {/* Mobile Menu Button */}
@@ -105,20 +114,14 @@ const Navbar = () => {
             </Link>
           ))}
           <div className="pt-4 border-t border-gray-200 flex flex-col space-y-2 px-3">
-            <Link
-              href="/login"
-              className="text-center text-gray-600 hover:text-blue-600 font-medium py-2"
-              onClick={() => setIsOpen(false)}
-            >
-              Login
-            </Link>
-            <Link
-              href="/register"
-              className="text-center bg-blue-600 text-white px-4 py-2 rounded-md font-medium hover:bg-blue-700 transition-colors"
-              onClick={() => setIsOpen(false)}
-            >
-              Register
-            </Link>
+           {
+              user ? <div>
+                <Link href={'/profile'} className="rounded-2xl text-center bg-teal-400 hover:bg-teal-500 font-bold text-white px-4 py-3">Profile</Link>
+                <button className='bg-red-600 text-white px-4 py-2 cursor-pointer rounded-2xl' onClick={() => authClient.signOut()}>Logout</button>
+              </div> : <>
+                <Link href={'/login'} className="bg-teal-400 hover:bg-teal-500 font-bold px-4 py-3 rounded-2xl">Login</Link>
+              </>
+            }
           </div>
         </div>
       )}
